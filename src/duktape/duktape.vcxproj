@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FC52F28E-9A67-4866-8E2C-BD7C4831DCB4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>duktape</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;DUK_USE_DATE_NOW_WINDOWS;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;DUK_USE_DATE_NOW_WINDOWS;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src-separate\duktape.h" />
+    <ClInclude Include="..\..\src-separate\duk_api_internal.h" />
+    <ClInclude Include="..\..\src-separate\duk_bi_protos.h" />
+    <ClInclude Include="..\..\src-separate\duk_builtins.h" />
+    <ClInclude Include="..\..\src-separate\duk_config.h" />
+    <ClInclude Include="..\..\src-separate\duk_dblunion.h" />
+    <ClInclude Include="..\..\src-separate\duk_debug.h" />
+    <ClInclude Include="..\..\src-separate\duk_debugger.h" />
+    <ClInclude Include="..\..\src-separate\duk_error.h" />
+    <ClInclude Include="..\..\src-separate\duk_exception.h" />
+    <ClInclude Include="..\..\src-separate\duk_forwdecl.h" />
+    <ClInclude Include="..\..\src-separate\duk_harray.h" />
+    <ClInclude Include="..\..\src-separate\duk_hboundfunc.h" />
+    <ClInclude Include="..\..\src-separate\duk_hbuffer.h" />
+    <ClInclude Include="..\..\src-separate\duk_hbufobj.h" />
+    <ClInclude Include="..\..\src-separate\duk_hcompfunc.h" />
+    <ClInclude Include="..\..\src-separate\duk_heap.h" />
+    <ClInclude Include="..\..\src-separate\duk_heaphdr.h" />
+    <ClInclude Include="..\..\src-separate\duk_henv.h" />
+    <ClInclude Include="..\..\src-separate\duk_hnatfunc.h" />
+    <ClInclude Include="..\..\src-separate\duk_hobject.h" />
+    <ClInclude Include="..\..\src-separate\duk_hproxy.h" />
+    <ClInclude Include="..\..\src-separate\duk_hstring.h" />
+    <ClInclude Include="..\..\src-separate\duk_hthread.h" />
+    <ClInclude Include="..\..\src-separate\duk_internal.h" />
+    <ClInclude Include="..\..\src-separate\duk_jmpbuf.h" />
+    <ClInclude Include="..\..\src-separate\duk_js.h" />
+    <ClInclude Include="..\..\src-separate\duk_json.h" />
+    <ClInclude Include="..\..\src-separate\duk_js_bytecode.h" />
+    <ClInclude Include="..\..\src-separate\duk_js_compiler.h" />
+    <ClInclude Include="..\..\src-separate\duk_lexer.h" />
+    <ClInclude Include="..\..\src-separate\duk_numconv.h" />
+    <ClInclude Include="..\..\src-separate\duk_refcount.h" />
+    <ClInclude Include="..\..\src-separate\duk_regexp.h" />
+    <ClInclude Include="..\..\src-separate\duk_replacements.h" />
+    <ClInclude Include="..\..\src-separate\duk_selftest.h" />
+    <ClInclude Include="..\..\src-separate\duk_strings.h" />
+    <ClInclude Include="..\..\src-separate\duk_tval.h" />
+    <ClInclude Include="..\..\src-separate\duk_unicode.h" />
+    <ClInclude Include="..\..\src-separate\duk_util.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src-separate\duk_alloc_default.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_buffer.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_bytecode.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_call.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_codec.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_compile.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_debug.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_heap.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_inspect.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_memory.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_object.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_stack.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_string.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_api_time.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_array.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_boolean.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_buffer.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_date.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_date_unix.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_date_windows.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_duktape.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_encoding.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_error.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_function.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_global.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_json.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_math.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_number.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_object.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_performance.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_pointer.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_promise.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_proxy.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_reflect.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_regexp.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_string.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_symbol.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_thread.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_bi_thrower.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_builtins.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_debugger.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_debug_fixedbuffer.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_debug_macros.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_debug_vsnprintf.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_error_augment.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_error_longjmp.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_error_macros.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_error_misc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_error_throw.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hbuffer_alloc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hbuffer_ops.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hbufobj_misc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_alloc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_finalize.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_hashstring.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_markandsweep.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_memory.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_misc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_refcount.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_stringcache.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_heap_stringtable.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hobject_alloc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hobject_class.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hobject_enum.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hobject_misc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hobject_pc2line.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hobject_props.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hstring_misc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hthread_alloc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hthread_builtins.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hthread_misc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_hthread_stacks.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_js_arith.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_js_call.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_js_compiler.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_js_executor.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_js_ops.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_js_var.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_lexer.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_numconv.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_regexp_compiler.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_regexp_executor.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_replacements.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_selftest.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_tval.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_unicode_support.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_unicode_tables.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_util_bitdecoder.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_util_bitencoder.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_util_bufwriter.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_util_hashbytes.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_util_misc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src-separate\duk_util_tinyrandom.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
