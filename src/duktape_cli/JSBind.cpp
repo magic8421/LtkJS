@@ -5,6 +5,7 @@
 #include "LtkApi.h"
 #include "LtkEdit.h"
 #include "LtkFont.h"
+#include "LtkButton.h"
 
 duk_context *g_ctx = nullptr;
 
@@ -76,6 +77,9 @@ void JSBindInit(duk_context *ctx)
 
     dukglue_register_constructor<LtkEdit>(ctx, "LtkEdit");
     dukglue_set_base_class<LtkWindow, LtkEdit>(ctx);
+
+    dukglue_register_constructor<LtkButton>(ctx, "LtkButton");
+    dukglue_set_base_class<LtkWindow, LtkButton>(ctx);
 
     dukglue_register_constructor<LtkFont>(ctx, "LtkFont");
     dukglue_register_method(ctx, &LtkFont::close, "close");

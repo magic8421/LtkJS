@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "UniConversion.h"
 
+// TODO change this to win32 api to avoid security issue.
 std::wstring Utf8ToUtf16(LPCSTR strA, int len)
 {
     if (len < 0) {
@@ -14,6 +15,7 @@ std::wstring Utf8ToUtf16(LPCSTR strA, int len)
     return std::move(strW);
 }
 
+// TODO change this to win32 api to avoid security issue.
 std::string Utf16ToUtf8(LPCWSTR strW, int len)
 {
     if (len < 0) {

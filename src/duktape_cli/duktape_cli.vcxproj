@@ -87,6 +87,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LtkButton.h" />
     <ClInclude Include="LtkFont.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="duk_cmdline.h" />
@@ -110,6 +111,7 @@
     </ClCompile>
     <ClCompile Include="JSBind.cpp" />
     <ClCompile Include="LtkApi.cpp" />
+    <ClCompile Include="LtkButton.cpp" />
     <ClCompile Include="LtkEdit.cpp" />
     <ClCompile Include="LtkFont.cpp" />
     <ClCompile Include="LtkWindow.cpp" />

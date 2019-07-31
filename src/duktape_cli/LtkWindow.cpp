@@ -59,7 +59,7 @@ std::string LtkWindow::GetText()
     return std::move(Utf16ToUtf8(strW.c_str(), strW.size()));
 }
 
-void LtkWindow::SetText(const char *text)
+void LtkWindow::SetText(LPCSTR text)
 {
     auto textW = Utf8ToUtf16(text);
     ::SetWindowText(m_hwnd, textW.c_str());
@@ -159,7 +159,7 @@ void LtkWindow::RegisterWndClass()
     wc.hInstance = HINST_THISCOMPONENT;
     wc.hIcon = NULL;
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground = NULL;// (HBRUSH)(COLOR_WINDOW + 1); // TODO 改成NULL 防止系统去擦除背景(闪烁) 双缓冲 还有clip children clip sibling
+    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1); // 如果这里改成NULL 可以防止系统去擦除背景(闪烁) 双缓冲 还有clip children clip sibling
     wc.lpszMenuName = NULL;
     wc.lpszClassName = L"ltk_cls";
 

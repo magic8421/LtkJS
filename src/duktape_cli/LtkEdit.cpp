@@ -5,7 +5,7 @@ extern duk_context *g_ctx;
 
 LtkEdit::LtkEdit()
 {
-    this->SetStyle(WS_CHILD | WS_VISIBLE | WS_BORDER);
+    this->SetStyle(WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL);
 }
 
 
