@@ -412,7 +412,7 @@ DUK_INTERNAL_DECL void duk_hthread_valstack_torture_realloc(duk_hthread *thr);
 DUK_INTERNAL_DECL void *duk_hthread_get_valstack_ptr(duk_heap *heap, void *ud);  /* indirect allocs */
 
 #if defined(DUK_USE_DEBUGGER_SUPPORT)
-DUK_INTERNAL_DECL duk_uint_fast32_t duk_hthread_get_act_curr_pc(duk_hthread *thr, duk_activation *act);
+duk_uint_fast32_t duk_hthread_get_act_curr_pc(duk_hthread *thr, duk_activation *act);
 #endif
 DUK_INTERNAL_DECL duk_uint_fast32_t duk_hthread_get_act_prev_pc(duk_hthread *thr, duk_activation *act);
 DUK_INTERNAL_DECL void duk_hthread_sync_currpc(duk_hthread *thr);

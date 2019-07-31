@@ -3,6 +3,7 @@
  */
 
 #include "duk_internal.h"
+#include "duk_config.h"
 
 #if defined(DUK_USE_DEBUGGER_SUPPORT)
 
@@ -1054,6 +1055,112 @@ DUK_INTERNAL duk_uint_fast32_t duk_debug_curr_line(duk_hthread *thr) {
 	return line;
 }
 
+DUK_EXTERNAL void duk_trace_back(duk_hthread *thr, duk_size_t level) {
+    duk_hthread *curr_thr = thr;
+    duk_activation *curr_act;
+    duk_uint_fast32_t pc;
+    duk_uint_fast32_t line;
+    duk_uint_fast32_t stack_cnt;
+
+    DUK_ASSERT(thr != NULL);
+
+    stack_cnt = 0;
+    //duk_debug_write_reply(thr);
+    while (curr_thr != NULL) {
+		curr_act = curr_thr->callstack_curr;
+		if (curr_act) {
+			curr_act = curr_act->parent; // skip itself
+		}
+        for (; curr_act != NULL; curr_act = curr_act->parent) {
+            /* PC/line semantics here are:
+            *   - For callstack top we're conceptually between two
+            *     opcodes and current PC indicates next line to
+            *     execute, so report that (matches Status).
+            *   - For other activations we're conceptually still
+            *     executing the instruction at PC-1, so report that
+            *     (matches error stacktrace behavior).
+            *   - See: https://github.com/svaarala/duktape/issues/281
+            */
+
+            /* XXX: optimize to use direct reads, i.e. avoid
+            * value stack operations.
+            */
+            duk_push_tval(thr, &curr_act->tv_func); // tv_func
+            duk_get_prop_stridx_short(thr, -1, DUK_STRIDX_FILE_NAME); // tv_func file_name
+            //duk__debug_write_hstring_safe_top(thr);
+            //duk_get_prop_stridx_short(thr, -2, DUK_STRIDX_NAME);
+            //duk__debug_write_hstring_safe_top(thr);
+            pc = duk_hthread_get_act_curr_pc(thr, curr_act);
+            if (curr_act != curr_thr->callstack_curr && pc > 0) {
+                pc--;
+            }
+            line = duk_hobject_pc2line_query(thr, -2, pc);
+            duk_push_sprintf(thr, "%s(%d) ", duk_get_string_default(thr, -1, "???"), line);
+            duk_remove(thr, -2); // file name
+            duk_remove(thr, -2); // tv_func
+            stack_cnt++;
+            //duk_debug_write_uint(thr, (duk_uint32_t)line);
+            //duk_debug_write_uint(thr, (duk_uint32_t)pc);
+            //duk_pop_3(thr);
+        }
+        curr_thr = curr_thr->resumer;
+    }
+    duk_concat(thr, stack_cnt);
+    /* SCANBUILD: warning about 'thr' potentially being NULL here,
+    * warning is incorrect because thr != NULL always here.
+    */
+    //duk_debug_write_eom(thr);
+}
+
+// return: current source line (up 1 level), stack +1
+DUK_EXTERNAL void duk_current_source_line(duk_hthread *thr) {
+	duk_hthread *curr_thr = thr;
+	duk_activation *curr_act;
+	duk_uint_fast32_t pc;
+	duk_uint_fast32_t line;
+	duk_uint_fast32_t top;
+
+	DUK_ASSERT(thr != NULL);
+
+	top = duk_get_top(thr);
+
+	curr_act = curr_thr->callstack_curr;
+	if (curr_act) {
+		curr_act = curr_act->parent; // skip itself
+	}
+	if (curr_act) {
+		/* PC/line semantics here are:
+		*   - For callstack top we're conceptually between two
+		*     opcodes and current PC indicates next line to
+		*     execute, so report that (matches Status).
+		*   - For other activations we're conceptually still
+		*     executing the instruction at PC-1, so report that
+		*     (matches error stacktrace behavior).
+		*   - See: https://github.com/svaarala/duktape/issues/281
+		*/
+
+		/* XXX: optimize to use direct reads, i.e. avoid
+		* value stack operations.
+		*/
+		duk_push_tval(thr, &curr_act->tv_func); // tv_func
+		duk_get_prop_stridx_short(thr, -1, DUK_STRIDX_FILE_NAME); // tv_func file_name
+		//duk__debug_write_hstring_safe_top(thr);
+		//duk_get_prop_stridx_short(thr, -2, DUK_STRIDX_NAME);
+		//duk__debug_write_hstring_safe_top(thr);
+		pc = duk_hthread_get_act_curr_pc(thr, curr_act);
+		if (curr_act != curr_thr->callstack_curr && pc > 0) {
+			pc--;
+		}
+		line = duk_hobject_pc2line_query(thr, -2, pc);
+		duk_push_sprintf(thr, "\t%s(%d)", duk_get_string_default(thr, -1, "???"), line);
+		duk_remove(thr, -2); // file name
+		duk_remove(thr, -2); // tv_func
+	}
+	if (!(duk_get_top(thr) == top + 1)) {
+		__debugbreak();
+	}
+}
+
 DUK_INTERNAL void duk_debug_send_status(duk_hthread *thr) {
 	duk_activation *act;
 
@@ -1448,7 +1555,7 @@ DUK_LOCAL void duk__debug_handle_put_var(duk_hthread *thr, duk_heap *heap) {
 	duk_debug_write_eom(thr);
 }
 
-DUK_LOCAL void duk__debug_handle_get_call_stack(duk_hthread *thr, duk_heap *heap) {
+void duk__debug_handle_get_call_stack(duk_hthread *thr, duk_heap *heap) {
 	duk_hthread *curr_thr = thr;
 	duk_activation *curr_act;
 	duk_uint_fast32_t pc;

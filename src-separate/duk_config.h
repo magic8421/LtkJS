@@ -65,7 +65,7 @@
 
 /* DLL build detection */
 /* not configured for DLL build */
-#undef DUK_F_DLL_BUILD
+#define DUK_F_DLL_BUILD
 
 /* Apple OSX, iOS */
 #if defined(__APPLE__)
@@ -2835,7 +2835,7 @@ typedef struct duk_hthread duk_context;
 #define DUK_USE_COMMONJS_MODULES
 #define DUK_USE_COMPILER_RECLIMIT 2500
 #define DUK_USE_COROUTINE_SUPPORT
-#undef DUK_USE_CPP_EXCEPTIONS
+#define DUK_USE_CPP_EXCEPTIONS
 #undef DUK_USE_DATAPTR16
 #undef DUK_USE_DATAPTR_DEC16
 #undef DUK_USE_DATAPTR_ENC16
@@ -2849,7 +2849,7 @@ typedef struct duk_hthread duk_context;
 #undef DUK_USE_DEBUGGER_DUMPHEAP
 #undef DUK_USE_DEBUGGER_INSPECT
 #undef DUK_USE_DEBUGGER_PAUSE_UNCAUGHT
-#undef DUK_USE_DEBUGGER_SUPPORT
+#define DUK_USE_DEBUGGER_SUPPORT
 #define DUK_USE_DEBUGGER_THROW_NOTIFY
 #undef DUK_USE_DEBUGGER_TRANSPORT_TORTURE
 #define DUK_USE_DEBUG_BUFSIZE 65536L
@@ -2917,7 +2917,7 @@ typedef struct duk_hthread duk_context;
 #define DUK_USE_HTML_COMMENTS
 #define DUK_USE_IDCHAR_FASTPATH
 #undef DUK_USE_INJECT_HEAP_ALLOC_ERROR
-#undef DUK_USE_INTERRUPT_COUNTER
+#define DUK_USE_INTERRUPT_COUNTER
 #undef DUK_USE_INTERRUPT_DEBUG_FIXUP
 #define DUK_USE_JC
 #define DUK_USE_JSON_BUILTIN

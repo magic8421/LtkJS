@@ -981,7 +981,7 @@ DUK_INTERNAL_DECL void duk_hobject_set_prototype_updref(duk_hthread *thr, duk_ho
 /* pc2line */
 #if defined(DUK_USE_PC2LINE)
 DUK_INTERNAL_DECL void duk_hobject_pc2line_pack(duk_hthread *thr, duk_compiler_instr *instrs, duk_uint_fast32_t length);
-DUK_INTERNAL_DECL duk_uint_fast32_t duk_hobject_pc2line_query(duk_hthread *thr, duk_idx_t idx_func, duk_uint_fast32_t pc);
+extern duk_uint_fast32_t duk_hobject_pc2line_query(duk_hthread *thr, duk_idx_t idx_func, duk_uint_fast32_t pc);
 #endif
 
 /* misc */

@@ -29,7 +29,7 @@ DUK_INTERNAL void duk_hthread_terminate(duk_hthread *thr) {
 }
 
 #if defined(DUK_USE_DEBUGGER_SUPPORT)
-DUK_INTERNAL duk_uint_fast32_t duk_hthread_get_act_curr_pc(duk_hthread *thr, duk_activation *act) {
+duk_uint_fast32_t duk_hthread_get_act_curr_pc(duk_hthread *thr, duk_activation *act) {
 	duk_instr_t *bcode;
 
 	DUK_ASSERT(thr != NULL);
