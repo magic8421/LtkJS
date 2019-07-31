@@ -31,6 +31,8 @@
  *          prep/duktape.c -lm -lws2_32
  */
 
+#include "pch.h"
+
 #undef UNICODE
 #if !defined(WIN32_LEAN_AND_MEAN)
 #define WIN32_LEAN_AND_MEAN
@@ -45,11 +47,6 @@
 #endif
 #endif
 
-#include <windows.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <stdio.h>
-#include <string.h>
 #include "duktape.h"
 #include "duk_trans_socket.h"
 
@@ -251,7 +248,7 @@ duk_size_t duk_trans_socket_read_cb(void *udata, char *buffer, duk_size_t length
 	 * timeout here to recover from "black hole" disconnects.
 	 */
 
-	ret = recv(client_sock, (void *) buffer, (int) length, 0);
+	ret = recv(client_sock, buffer, (int) length, 0);
 	if (ret < 0) {
 		fprintf(stderr, "%s: debug read failed, error %d, closing connection\n",
 		        __FILE__, ret);
@@ -315,7 +312,7 @@ duk_size_t duk_trans_socket_write_cb(void *udata, const char *buffer, duk_size_t
 	 * timeout here to recover from "black hole" disconnects.
 	 */
 
-	ret = send(client_sock, (const void *) buffer, (int) length, 0);
+	ret = send(client_sock, buffer, (int) length, 0);
 	if (ret <= 0 || ret > (int) length) {
 		fprintf(stderr, "%s: debug write failed, ret %d, closing connection\n",
 		        __FILE__, ret);

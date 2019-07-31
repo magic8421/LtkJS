@@ -21,6 +21,8 @@
  *    support for example allocators, grep for DUK_CMDLINE_*.
  */
 
+#include "pch.h"
+
 /* Helper define to enable a feature set; can also use separate defines. */
 #if defined(DUK_CMDLINE_FANCY)
 #define DUK_CMDLINE_LINENOISE
@@ -32,7 +34,7 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || \
     defined(WIN64) || defined(_WIN64) || defined(__WIN64__)
 /* Suppress warnings about plain fopen() etc. */
-#define _CRT_SECURE_NO_WARNINGS
+//#define _CRT_SECURE_NO_WARNINGS
 #if defined(_MSC_VER) && (_MSC_VER < 1900)
 /* Workaround for snprintf() missing in older MSVC versions.
  * Note that _snprintf() may not NUL terminate the string, but
@@ -94,6 +96,9 @@
 #if defined(DUK_CMDLINE_DEBUGGER_SUPPORT)
 #include "duk_trans_socket.h"
 #endif
+
+//#include "dukglue/dukglue.h"
+#include "JSBind.h"
 
 #define  MEM_LIMIT_NORMAL   (128*1024*1024)   /* 128 MB */
 #define  MEM_LIMIT_HIGH     (2047*1024*1024)  /* ~2 GB */
@@ -1252,6 +1257,19 @@ static void destroy_duktape_heap(duk_context *ctx, int alloc_provider) {
 #endif
 }
 
+static duk_ret_t native_print(duk_context *ctx) {
+	duk_current_source_line(ctx);
+    duk_push_string(ctx, " ");
+    duk_insert(ctx, 0);
+    duk_join(ctx, duk_get_top(ctx) - 1);
+    printf("%s\n", duk_safe_to_string(ctx, -1));
+    return 0;
+}
+
+static duk_ret_t trace_back(duk_context *ctx) {
+    duk_trace_back(ctx, 0);
+    return 1;
+}
 /*
  *  Main
  */
@@ -1275,6 +1293,9 @@ int main(int argc, char *argv[]) {
 
 	main_argc = argc;
 	main_argv = (char **) argv;
+
+    _CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
+    //_crtBreakAlloc = 2271;
 
 #if defined(EMSCRIPTEN)
 	/* Try to use NODEFS to provide access to local files.  Mount the
@@ -1419,6 +1440,14 @@ int main(int argc, char *argv[]) {
 
 	ctx = create_duktape_heap(alloc_provider, debugger, lowmem_log);
 
+    duk_push_c_function(ctx, native_print, DUK_VARARGS);
+    duk_put_global_string(ctx, "print");
+
+    duk_push_c_function(ctx, trace_back, 0);
+    duk_put_global_string(ctx, "traceback");
+
+    JSBindInit(ctx);
+
 	/*
 	 *  Execute any argument file(s)
 	 */
@@ -1518,6 +1547,8 @@ int main(int argc, char *argv[]) {
 	}
 	ctx = NULL;
 
+	puts("press any key...");
+	getchar();
 	return retval;
 
 	/*
