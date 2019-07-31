@@ -62,10 +62,10 @@ void JSBindInit(duk_context *ctx)
 	dukglue_register_constructor<Rect, float, float, float, float>(ctx, "Rect");
 	dukglue_register_method(ctx, &Rect::close, "close");
 
-    dukglue_register_function(ctx, &RunMessageLoop, "RunMessageLoop");
-    dukglue_register_function(ctx, &LtkWindow::RegisterWndClass, "RegisterWndClass");
-    dukglue_register_function(ctx, &JsPostQuitMessage, "PostQuitMessage");
+    dukglue_register_function(ctx, &LtkApi::RunMessageLoop, "RunMessageLoop");
+    dukglue_register_function(ctx, &LtkApi::PostQuitMessage, "PostQuitMessage");
 
+    dukglue_register_function(ctx, &LtkWindow::RegisterWndClass, "RegisterWndClass");
     dukglue_register_constructor<LtkWindow>(ctx, "LtkWindow");
     dukglue_register_method(ctx, &LtkWindow::close, "close");
     dukglue_register_method(ctx, &LtkWindow::Create, "Create");

@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <algorithm>
+#include <sstream>
 
 namespace dukglue
 {
@@ -263,7 +264,6 @@ namespace dukglue
 
 			static duk_ret_t native_leak_finalizer(duk_context* ctx)
 			{
-				printf("native_leak_finalizer\n");
 				std::tuple<std::string, int> tup;
 				std::vector<decltype(tup)> vec;
 				duk_enum(ctx, -1, 0);
@@ -278,8 +278,11 @@ namespace dukglue
 				std::sort(vec.begin(), vec.end(), [](const decltype(tup) &lhs, const decltype(tup) &rhs) -> bool {
 					return std::get<1>(lhs) < std::get<1>(rhs);
 				});
+                std::stringstream ss;
 				for (const auto &item : vec) {
-					printf("%d leaks, stack: %s\n", std::get<1>(item), std::get<0>(item).c_str());
+                    ss.str(std::string());
+                    ss << std::get<1>(item) << " NATIVE LEAK -> " << std::get<0>(item) << "\r\n";
+                    ::OutputDebugStringA(ss.str().c_str());
 				}
 				_CrtCheckMemory();
 				return 0;

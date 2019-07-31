@@ -1,4 +1,9 @@
 #pragma once
 
-void RunMessageLoop();
-void JsPostQuitMessage();
+namespace LtkApi
+{
+
+    void RunMessageLoop();
+    void PostQuitMessage();
+
+}
