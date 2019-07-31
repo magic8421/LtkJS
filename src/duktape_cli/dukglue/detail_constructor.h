@@ -18,11 +18,17 @@ namespace dukglue {
       auto constructor_args = dukglue::detail::get_stack_values<Ts...>(ctx);
       Cls* obj = dukglue::detail::apply_constructor<Cls>(std::move(constructor_args));
 
-      duk_push_this(ctx);
+      duk_push_this(ctx); // [this]
 
       // make the new script object keep the pointer to the new object instance
       duk_push_pointer(ctx, obj);
       duk_put_prop_string(ctx, -2, "\xFF" "obj_ptr");
+
+	  // chenshi 2019-1-15 13:26:50
+	  duk_trace_back(ctx, 0); // [this] [trace_back]
+	  duk_dup(ctx, -1); // [this] [trace_back] [trace_back]
+	  duk_put_prop_string(ctx, -3, "\xFF" "trace_back"); // [this] [trace_back]
+	  RefManager::inc_native_alloc_count(ctx); // [this]
 
       // register it
 	  if (!managed)

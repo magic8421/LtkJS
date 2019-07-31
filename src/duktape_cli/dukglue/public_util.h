@@ -120,6 +120,34 @@ typename std::enable_if<!std::is_void<RetT>::value, duk_idx_t>::type call_method
 }
 
 template <typename RetT, typename ObjT, typename... ArgTs>
+typename std::enable_if<std::is_void<RetT>::value, RetT>::type dukglue_pcall_method2(duk_context* ctx, const ObjT& obj, const char* method_name, ArgTs... args)
+{
+    dukglue::detail::SafeMethodCallData<RetT, ObjT, ArgTs...> data{
+        &obj, method_name, std::tuple<ArgTs...>(args...), nullptr
+    };
+
+    int top = duk_get_top(ctx);
+    dukglue_push(ctx, obj); // obj
+    duk_get_prop_string(ctx, -1, method_name); // obj func
+
+    int type = duk_get_type(ctx, -1);
+    type = duk_get_type(ctx, -2);
+    if (!duk_is_callable(ctx, -1)) {
+        //duk_error(ctx, DUK_ERR_TYPE_ERROR, "Property is not callable");
+        return;
+    }
+    duk_pop_2(ctx);
+    if (duk_get_top(ctx) != top)
+        __debugbreak();
+
+    duk_idx_t rc = duk_safe_call(ctx, &dukglue::detail::call_method_safe<RetT, ObjT, ArgTs...>, (void*)&data, 0, 1);
+    if (rc != 0)
+        throw DukErrorException(ctx, rc);
+
+    duk_pop(ctx);  // remove result from stack
+}
+
+template <typename RetT, typename ObjT, typename... ArgTs>
 typename std::enable_if<std::is_void<RetT>::value, RetT>::type dukglue_pcall_method(duk_context* ctx, const ObjT& obj, const char* method_name, ArgTs... args)
 {
 	dukglue::detail::SafeMethodCallData<RetT, ObjT, ArgTs...> data {

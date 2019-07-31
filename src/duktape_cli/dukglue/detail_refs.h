@@ -3,6 +3,7 @@
 #include <duktape.h>
 
 #include <unordered_map>
+#include <algorithm>
 
 namespace dukglue
 {
@@ -95,6 +96,48 @@ namespace dukglue
 
 				duk_pop(ctx);  // pop ref_array
 			}
+			
+			// Stack: ... [trace_back] -> ...
+			static void inc_native_alloc_count(duk_context* ctx)
+			{
+				int count = 1;
+				push_native_leaks_array(ctx); // [trace_back] [array]
+				duk_dup(ctx, -2); // [trace_back] [array] [trace_back]
+				if (duk_get_prop(ctx, -2)) {
+					// [trace_back] [array] [count]
+					count = duk_require_int(ctx, -1);
+					count++;
+					duk_pop(ctx); // [trace_back] [array]
+				}
+				else {
+					duk_pop(ctx); // [trace_back] [array]
+				}
+				duk_dup(ctx, -2); // [trace_back] [array] [trace_back]
+				duk_push_int(ctx, count); // [trace_back] [array] [trace_back] [count]
+				duk_put_prop(ctx, -3);  // [trace_back] [array]
+				duk_pop_2(ctx);
+			}
+
+			// Stack: ... [trace_back] -> ...
+			static void dec_native_alloc_count(duk_context* ctx)
+			{
+				push_native_leaks_array(ctx); // [trace_back] [array]
+				duk_dup(ctx, -2); // [trace_back] [array] [trace_back]
+				if (duk_get_prop(ctx, -2)) {
+					// [trace_back] [array] [count]
+					int count = duk_require_int(ctx, -1);
+					count--;
+					duk_pop(ctx); // [trace_back] [array]
+
+					duk_dup(ctx, -2); // [trace_back] [array] [trace_back]
+					duk_push_int(ctx, count); // [trace_back] [array] [trace_back] [count]
+					duk_put_prop(ctx, -3);  // [trace_back] [array]
+				}
+				else {
+					duk_pop(ctx); // [trace_back] [array]
+				}
+				duk_pop_2(ctx);
+			}
 
 			// Remove the object associated with obj_ptr from the registry
 			// and invalidate the object's internal native pointer (by setting it to undefined).
@@ -112,6 +155,12 @@ namespace dukglue
 
 				push_ref_array(ctx);
 				duk_get_prop_index(ctx, -1, it->second);
+
+				// [object]
+				duk_get_prop_string(ctx, -1, "\xFF" "trace_back"); // [object] [trace_back]
+				//const char *trace = duk_require_string(ctx, -1);
+				//printf("native trace: %s\n", trace);
+				dec_native_alloc_count(ctx); // [object]
 
 				// invalidate internal pointer
 				duk_push_undefined(ctx);
@@ -193,6 +242,47 @@ namespace dukglue
 
 				duk_get_prop_string(ctx, -1, DUKGLUE_REF_ARRAY);
 				duk_remove(ctx, -2); // pop heap stash
+			}
+
+			// Stack: ... -> ... [array]
+			static void push_native_leaks_array(duk_context* ctx)
+			{
+				static const char* DUKGLUE_NATIVE_LEAKS_ARRAY = "dukglue_native_leaks";
+				duk_push_heap_stash(ctx); // [stash]
+
+				if (!duk_has_prop_string(ctx, -1, DUKGLUE_NATIVE_LEAKS_ARRAY)) {
+					duk_push_array(ctx); // [stash] [array]
+					duk_push_c_function(ctx, native_leak_finalizer, 1); // [stash] [array] [finalizer]
+					duk_set_finalizer(ctx, -2); // [stash] [array]
+					duk_put_prop_string(ctx, -2, DUKGLUE_NATIVE_LEAKS_ARRAY); // [stash]
+				}
+
+				duk_get_prop_string(ctx, -1, DUKGLUE_NATIVE_LEAKS_ARRAY); // [stash] [array]
+				duk_remove(ctx, -2); // [array]
+			}
+
+			static duk_ret_t native_leak_finalizer(duk_context* ctx)
+			{
+				printf("native_leak_finalizer\n");
+				std::tuple<std::string, int> tup;
+				std::vector<decltype(tup)> vec;
+				duk_enum(ctx, -1, 0);
+				while (duk_next(ctx, -1, 1)) {
+					std::get<0>(tup) = duk_require_string(ctx, -2);
+					std::get<1>(tup) = duk_require_int(ctx, -1);
+					duk_pop_2(ctx);
+					if (std::get<1>(tup) != 0) {
+						vec.push_back(tup);
+					}
+				}
+				std::sort(vec.begin(), vec.end(), [](const decltype(tup) &lhs, const decltype(tup) &rhs) -> bool {
+					return std::get<1>(lhs) < std::get<1>(rhs);
+				});
+				for (const auto &item : vec) {
+					printf("%d leaks, stack: %s\n", std::get<1>(item), std::get<0>(item).c_str());
+				}
+				_CrtCheckMemory();
+				return 0;
 			}
 		};
 	}
