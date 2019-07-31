@@ -21,6 +21,7 @@ public:
 
     void Create(LtkWindow *parent, int x, int y, int w, int h);
     void SetVisible(bool v);
+    std::string GetText();
     void SetText(const char *text);
     void SetStyle(DWORD style);
     void SetExStyle(DWORD exStyle);

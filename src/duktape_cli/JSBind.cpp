@@ -70,6 +70,7 @@ void JSBindInit(duk_context *ctx)
     dukglue_register_method(ctx, &LtkWindow::close, "close");
     dukglue_register_method(ctx, &LtkWindow::Create, "Create");
     dukglue_register_method(ctx, &LtkWindow::SetVisible, "SetVisible");
+    dukglue_register_method(ctx, &LtkWindow::GetText, "GetText");
     dukglue_register_method(ctx, &LtkWindow::SetText, "SetText");
     dukglue_register_method(ctx, &LtkWindow::SetFont, "SetFont");
 

@@ -42,7 +42,7 @@ function fd () {
 	wnd.SetVisible(true);
 
 	edit.OnChange = function() {
-		print("edit changed");
+		print("edit changed: " + edit.GetText());
 	}
 	
 	RunMessageLoop();

@@ -22,6 +22,7 @@
  */
 
 #include "pch.h"
+#include "Utils.h"
 
 /* Helper define to enable a feature set; can also use separate defines. */
 #if defined(DUK_CMDLINE_FANCY)
@@ -1262,7 +1263,10 @@ static duk_ret_t native_print(duk_context *ctx) {
     duk_push_string(ctx, " ");
     duk_insert(ctx, 0);
     duk_join(ctx, duk_get_top(ctx) - 1);
-    printf("%s\n", duk_safe_to_string(ctx, -1));
+    // printf("%s\n", duk_safe_to_string(ctx, -1));
+    auto text = Utf8ToUtf16(duk_safe_to_string(ctx, -1));
+    text.append(L"\r\n");
+    ::OutputDebugStringW(text.c_str());
     return 0;
 }
 

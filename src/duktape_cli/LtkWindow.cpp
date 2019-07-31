@@ -39,6 +39,7 @@ void LtkWindow::Create(LtkWindow *parent, int x, int y, int w, int h)
     // 这里设置了两次 一次是在 WM_NCCREATE 里面 有点奇怪 2019-7-31 17:08:31
     ::SetWindowLongPtr(m_hwnd, GWLP_USERDATA,
         reinterpret_cast<LPARAM>(this));
+    dukglue_pcall_method2<void>(g_ctx, this, "OnCreate");
 }
 
 void LtkWindow::SetVisible(bool v)
@@ -48,6 +49,14 @@ void LtkWindow::SetVisible(bool v)
     } else {
         ::ShowWindow(m_hwnd, SW_HIDE);
     }
+}
+
+std::string LtkWindow::GetText()
+{
+    std::wstring strW;
+    strW.resize(::GetWindowTextLengthW(m_hwnd) + 1);
+    ::GetWindowText(m_hwnd, &strW[0], strW.size() + 1);
+    return std::move(Utf16ToUtf8(strW.c_str(), strW.size()));
 }
 
 void LtkWindow::SetText(const char *text)
@@ -102,9 +111,9 @@ LRESULT LtkWindow::WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam
 {
     auto ctx = g_ctx;
     switch (message) {
-    case WM_CREATE:
+    /*case WM_CREATE:
         dukglue_pcall_method2<void>(ctx, this, "OnCreate"); 
-        break;
+        break;*/
     case WM_CLOSE:
         dukglue_pcall_method2<void>(ctx, this, "OnClose");
         break;
@@ -123,16 +132,16 @@ LRESULT CALLBACK LtkWindow::WndProcStatic(HWND hwnd, UINT message, WPARAM wparam
 {
     LtkWindow *thiz = nullptr;
 
-    if (WM_NCCREATE == message) {
-        LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lparam);
-        thiz = reinterpret_cast<LtkWindow*>(lpcs->lpCreateParams);
-        thiz->m_hwnd = hwnd;
-        SetWindowLongPtr(hwnd, GWLP_USERDATA,
-            reinterpret_cast<LPARAM>(thiz));
-    } else {
+    //if (WM_NCCREATE == message) {
+    //    LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lparam);
+    //    thiz = reinterpret_cast<LtkWindow*>(lpcs->lpCreateParams);
+    //    thiz->m_hwnd = hwnd;
+    //    SetWindowLongPtr(hwnd, GWLP_USERDATA,
+    //        reinterpret_cast<LPARAM>(thiz));
+    //} else {
         thiz = reinterpret_cast<LtkWindow *>
             (GetWindowLongPtr(hwnd, GWLP_USERDATA));
-    }
+    //}
     if (!thiz) {
         //LTK_LOG("WndProc thiz is NULL, message: %d", message);
         return ::DefWindowProc(hwnd, message, wparam, lparam);
