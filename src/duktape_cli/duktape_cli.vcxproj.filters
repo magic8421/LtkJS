@@ -54,6 +54,9 @@
     <ClInclude Include="LtkButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LtkListView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="duk_cmdline.c">
@@ -87,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LtkButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LtkListView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

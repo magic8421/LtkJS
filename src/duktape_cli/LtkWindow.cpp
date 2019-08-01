@@ -90,7 +90,7 @@ void LtkWindow::OnNotify(UINT id, NMHDR *hdr)
 {
     LtkWindow *wnd = reinterpret_cast<LtkWindow *>
         (GetWindowLongPtr(hdr->hwndFrom, GWLP_USERDATA));
-    if (wnd) {
+    if (wnd && wnd != this) {
         wnd->OnNotify(id, hdr);
     }
 }
@@ -101,7 +101,7 @@ void LtkWindow::OnCommand(WPARAM wparam, LPARAM lparam)
         HWND hwnd = (HWND)lparam;
         LtkWindow *wnd = reinterpret_cast<LtkWindow *>
             (GetWindowLongPtr(hwnd, GWLP_USERDATA));
-        if (wnd) {
+        if (wnd && wnd != this) {
             wnd->OnCommand(wparam, lparam);
         }
     }

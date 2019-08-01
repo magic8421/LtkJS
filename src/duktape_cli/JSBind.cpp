@@ -6,6 +6,7 @@
 #include "LtkEdit.h"
 #include "LtkFont.h"
 #include "LtkButton.h"
+#include "LtkListView.h"
 
 duk_context *g_ctx = nullptr;
 
@@ -48,12 +49,25 @@ void TestClass::close()
 //	return std::move(func);
 //}
 
+static void register_constant_table(duk_context *ctx)
+{
+    auto top = duk_get_top(ctx);
+    duk_push_global_object(ctx); // global
+    duk_push_c_function(ctx, LtkApi::GetConstantTable, 0); // global func
+    duk_put_prop_string(ctx, -2, "LtkConstantTable"); // global
+    duk_pop(ctx);
+    assert(top == duk_get_top(ctx));
+}
+
 void JSBindInit(duk_context *ctx)
 {
 	//auto fn = lambda_test();
 	//fn(3);
 
 	g_ctx = ctx;
+
+    register_constant_table(ctx);
+
 	dukglue_register_constructor<TestClass, int>(ctx, "TestClass");
 	dukglue_register_method(ctx, &TestClass::Print, "Print");
 	dukglue_register_method(ctx, &TestClass::SetRect, "SetRect");
@@ -80,6 +94,9 @@ void JSBindInit(duk_context *ctx)
 
     dukglue_register_constructor<LtkButton>(ctx, "LtkButton");
     dukglue_set_base_class<LtkWindow, LtkButton>(ctx);
+
+    dukglue_register_constructor<LtkListView>(ctx, "LtkListView");
+    dukglue_set_base_class<LtkWindow, LtkListView>(ctx);
 
     dukglue_register_constructor<LtkFont>(ctx, "LtkFont");
     dukglue_register_method(ctx, &LtkFont::close, "close");

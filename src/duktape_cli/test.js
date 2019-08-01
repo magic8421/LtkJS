@@ -5,6 +5,12 @@ function fa () {
 }
 
 function fb () {
+	var win32 = LtkConstantTable();
+	print("win32", win32);
+	for (var name in win32) {
+		print(name, win32[name]);
+	}
+
 	fa();
 }
 
@@ -27,6 +33,7 @@ function fd () {
 	var edit = new LtkEdit();
 	var font = new LtkFont();
 	var btn1 = new LtkButton();
+	var listview = new LtkListView();
 
 	wnd.OnCreate = function () {
 		print("OnCreate callback");
@@ -38,6 +45,7 @@ function fd () {
 		btn1.Create(wnd, 400 + 10 + 5, 10, 80, 35);
 		btn1.SetText("提交");
 		btn1.SetFont(font, true); // TODO 怎样一次设置整个窗口的字体?
+		listview.Create(wnd, 10, 50, 500, 500);
 	}
 	wnd.OnClose = function () {
 		PostQuitMessage();
@@ -46,12 +54,16 @@ function fd () {
 	wnd.SetVisible(true);
 
 	edit.OnChange = function() {
-		print("edit changed: " + edit.GetText());
+		print("edit changed: ", edit.GetText());
+	}
+	btn1.OnClick = function () {
+		print("btn1 OnClick");
 	}
 	
 	RunMessageLoop();
 	edit.close();
 	btn1.close();
+	listview.close();
 	wnd.close();
 	font.close();
 	fc();

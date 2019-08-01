@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="LtkButton.h" />
     <ClInclude Include="LtkFont.h" />
+    <ClInclude Include="LtkListView.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="duk_cmdline.h" />
     <ClInclude Include="duk_trans_socket.h" />
@@ -114,6 +115,7 @@
     <ClCompile Include="LtkButton.cpp" />
     <ClCompile Include="LtkEdit.cpp" />
     <ClCompile Include="LtkFont.cpp" />
+    <ClCompile Include="LtkListView.cpp" />
     <ClCompile Include="LtkWindow.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
