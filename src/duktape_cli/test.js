@@ -5,12 +5,13 @@ function fa () {
 }
 
 function fb () {
+	/*
 	var win32 = LtkConstantTable();
 	print("win32", win32);
 	for (var name in win32) {
 		print(name, win32[name]);
 	}
-
+	*/
 	fa();
 }
 
@@ -46,6 +47,8 @@ function fd () {
 		btn1.SetText("提交");
 		btn1.SetFont(font, true); // TODO 怎样一次设置整个窗口的字体?
 		listview.Create(wnd, 10, 50, 500, 500);
+		listview.InsertColumn(0, "001", 100, 0);
+		listview.InsertColumn(1, "002", 140, 0);
 	}
 	wnd.OnClose = function () {
 		PostQuitMessage();

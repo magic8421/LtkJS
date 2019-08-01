@@ -19,6 +19,7 @@ public:
     virtual void OnCommand(WPARAM wparam, LPARAM lparam);
     virtual void OnNotify(UINT id, NMHDR *hdr);
 
+    HWND GetHWND() { return m_hwnd; }
     void Create(LtkWindow *parent, int x, int y, int w, int h);
     void SetVisible(bool v);
     std::string GetText();

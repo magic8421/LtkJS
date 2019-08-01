@@ -12,5 +12,8 @@ public:
     virtual void OnCommand(WPARAM wparam, LPARAM lparam) override;
     virtual void OnNotify(UINT id, NMHDR *hdr) override;
 
+    void InsertColumn(int iSubItem, LPCSTR text, int cx, int format);
+    void InsertItem();
+
 };
 

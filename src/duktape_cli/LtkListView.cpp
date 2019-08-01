@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "LtkListView.h"
+#include "Utils.h"
 
 
 LtkListView::LtkListView()
@@ -23,4 +24,17 @@ void LtkListView::OnNotify(UINT id, NMHDR *hdr)
 {
 }
 
+void LtkListView::InsertColumn(int iSubItem, LPCSTR text, int cx, int format)
+{
+    auto textW = Utf8ToUtf16(text);
+    LVCOLUMN lvc = { 0 };
+
+    lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+
+    lvc.iSubItem = iSubItem;
+    lvc.pszText = &textW[0];
+    lvc.cx = cx;
+    lvc.fmt = format;
+    ListView_InsertColumn(GetHWND(), iSubItem, &lvc);
+}
 
