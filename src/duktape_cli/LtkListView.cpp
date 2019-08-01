@@ -38,3 +38,14 @@ void LtkListView::InsertColumn(int iSubItem, LPCSTR text, int cx, int format)
     ListView_InsertColumn(GetHWND(), iSubItem, &lvc);
 }
 
+void LtkListView::InsertItem(int iItem, LPCSTR text)
+{
+    auto textW = Utf8ToUtf16(text);
+
+    LVITEM item = { 0 };
+    item.mask = LVIF_TEXT;
+    item.iItem = iItem;
+    item.pszText = &textW[0];
+    ListView_InsertItem(GetHWND(), &item);
+}
+

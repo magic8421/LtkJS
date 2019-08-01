@@ -49,6 +49,8 @@ function fd () {
 		listview.Create(wnd, 10, 50, 500, 500);
 		listview.InsertColumn(0, "001", 100, 0);
 		listview.InsertColumn(1, "002", 140, 0);
+		listview.InsertItem(0, "fffff");
+		listview.InsertItem(1, "bbbbbbb");
 	}
 	wnd.OnClose = function () {
 		PostQuitMessage();

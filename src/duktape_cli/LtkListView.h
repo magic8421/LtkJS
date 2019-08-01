@@ -13,7 +13,7 @@ public:
     virtual void OnNotify(UINT id, NMHDR *hdr) override;
 
     void InsertColumn(int iSubItem, LPCSTR text, int cx, int format);
-    void InsertItem();
+    void InsertItem(int iItem, LPCSTR text);
 
 };
 
