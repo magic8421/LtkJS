@@ -103,6 +103,8 @@ void JSBindInit(duk_context *ctx)
     dukglue_set_base_class<LtkWindow, LtkListView>(ctx);
     dukglue_register_method(ctx, &LtkListView::InsertColumn, "InsertColumn");
     dukglue_register_method(ctx, &LtkListView::InsertItem, "InsertItem");
+    dukglue_register_method(ctx, &LtkListView::SetItem, "SetItem");
+    dukglue_register_method(ctx, &LtkListView::SetExtendedStyle, "SetExtendedStyle");
 
     dukglue_register_constructor<LtkFont>(ctx, "LtkFont");
     dukglue_register_method(ctx, &LtkFont::close, "close");

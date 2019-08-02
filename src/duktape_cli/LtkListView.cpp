@@ -6,6 +6,7 @@
 LtkListView::LtkListView()
 {
     this->SetStyle(WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT);
+    this->SetExStyle(LVS_EX_FULLROWSELECT);
 }
 
 LtkListView::~LtkListView()
@@ -47,5 +48,22 @@ void LtkListView::InsertItem(int iItem, LPCSTR text)
     item.iItem = iItem;
     item.pszText = &textW[0];
     ListView_InsertItem(GetHWND(), &item);
+}
+
+void LtkListView::SetItem(int iItem, int iSubItem, LPCSTR text)
+{
+    auto textW = Utf8ToUtf16(text);
+
+    LVITEM item = { 0 };
+    item.mask = LVIF_TEXT;
+    item.iItem = iItem;
+    item.iSubItem = iSubItem;
+    item.pszText = &textW[0];
+    ListView_SetItem(GetHWND(), &item);
+}
+
+void LtkListView::SetExtendedStyle(uint32_t style)
+{
+    ListView_SetExtendedListViewStyle(GetHWND(), style);
 }
 

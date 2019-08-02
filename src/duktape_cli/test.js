@@ -1,4 +1,5 @@
 
+var win32 = LtkConstantTable();
 
 function fa () {
 	fd();
@@ -47,9 +48,11 @@ function fd () {
 		btn1.SetText("提交");
 		btn1.SetFont(font, true); // TODO 怎样一次设置整个窗口的字体?
 		listview.Create(wnd, 10, 50, 500, 500);
+		listview.SetExtendedStyle(win32.LVS_EX_FULLROWSELECT);
 		listview.InsertColumn(0, "001", 100, 0);
 		listview.InsertColumn(1, "002", 140, 0);
 		listview.InsertItem(0, "fffff");
+		listview.SetItem(0, 1, "hahahahaa");
 		listview.InsertItem(1, "bbbbbbb");
 	}
 	wnd.OnClose = function () {
@@ -62,7 +65,9 @@ function fd () {
 		print("edit changed: ", edit.GetText());
 	}
 	btn1.OnClick = function () {
-		print("btn1 OnClick");
+		var text = edit.GetText();
+		listview.InsertItem(0, text);
+		edit.SetText("");
 	}
 	
 	RunMessageLoop();

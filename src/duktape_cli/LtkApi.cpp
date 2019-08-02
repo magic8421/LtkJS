@@ -47,6 +47,8 @@ duk_ret_t GetConstantTable(duk_context *ctx)
         CONST_ENTRY(WS_MAXIMIZEBOX)
         CONST_ENTRY(WS_OVERLAPPEDWINDOW)
         CONST_ENTRY(WS_POPUPWINDOW)
+
+        CONST_ENTRY(LVS_EX_FULLROWSELECT)
         {NULL, 0}
     };
     duk_push_object(ctx); // obj

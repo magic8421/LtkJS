@@ -14,6 +14,7 @@ public:
 
     void InsertColumn(int iSubItem, LPCSTR text, int cx, int format);
     void InsertItem(int iItem, LPCSTR text);
-
+    void SetItem(int iItem, int iSubItem, LPCSTR text);
+    void SetExtendedStyle(uint32_t style);
 };
 

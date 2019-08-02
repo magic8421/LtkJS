@@ -159,7 +159,7 @@ void LtkWindow::RegisterWndClass()
     wc.hInstance = HINST_THISCOMPONENT;
     wc.hIcon = NULL;
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1); // 如果这里改成NULL 可以防止系统去擦除背景(闪烁) 双缓冲 还有clip children clip sibling
+    wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1); // 如果这里改成NULL 可以防止系统去擦除背景(闪烁) 双缓冲 还有clip children clip sibling
     wc.lpszMenuName = NULL;
     wc.lpszClassName = L"ltk_cls";
 
